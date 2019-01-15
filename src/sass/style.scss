@@ -1,0 +1,285 @@
+@import 'http://fonts.googleapis.com/css?family=Roboto';
+@import 'https://use.fontawesome.com/1c28ca5809.css';
+
+$red: #df1f1f;
+
+@mixin clearfix {
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: #eee url(../images/shattered.png) repeat top center;
+    overflow: hidden;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+main {
+    margin: 0 auto;
+    width: 1260px;
+
+    &.loading {
+        height: 100vh;
+        background: url(../images/loader.gif) no-repeat center center;
+
+        #screen, header {
+            opacity: 0;
+        }
+    }
+
+    header, #screen {
+        opacity: 1;
+        transition: .5s opacity ease;
+    }
+
+    header {
+        background: $red;
+
+        #top {
+            display: flex;
+            padding: 20px;
+            height: 100px;
+            align-content: center;
+            justify-content: flex-start;
+
+            > * {
+                display: block;
+            }
+
+            img {
+                width: 120px;
+            }
+
+            input {
+                padding: 0 20px;
+                background: #ac0809;
+                border: none;
+                border-radius: 30px;
+                width: 1000px;
+                outline: none;
+                color: #fff;
+                font-size: 20px;
+                line-height: 2;
+                margin-top: 10px;
+                height: 40px;
+                margin-left: 50px;
+                opacity: 1;
+                transition: .25s opacity ease-in;
+
+                &[disabled] {
+                    opacity: .5;
+                }
+            }
+
+            ::-webkit-input-placeholder {
+                color: $red;
+                font-size: 20px;
+            }
+        }
+
+        #tabs {
+            width: 100%;
+            text-transform: uppercase;
+            font-weight: bold;
+            display: flex;
+            padding: 5px;
+
+            a {
+                border-top: 1px solid #fff;
+                padding: 10px 0;
+                margin: 5px;
+                text-align: center;
+                display: block;
+                width: 50%;
+                text-decoration: none;
+                color: #fff;
+                letter-spacing: 1px;
+                opacity: .5;
+                transition: .5s all;
+
+                &:hover, &.selected {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    #screen {
+        display: flex;
+        height: 800px;
+
+        #results {
+            width: 50%;
+            max-height: 800px;
+            overflow-y: scroll;
+            background: #fff;
+
+            &.loading {
+                background: #fff url(../images/loader.gif) no-repeat center center;
+
+                .thumbnail .mask {
+                    animation-duration: .75s;
+                    animation-fill-mode: forwards;
+                    animation-iteration-count: infinite;
+                    animation-name: placeHolderShimmer;
+                    animation-timing-function: linear;
+                    background: #f6f7f8;
+                    background: linear-gradient(to right, #eeeeee 0%, #dddddd 7%, #eeeeee 62%);
+                    z-index: 20;
+                }
+
+                .result {
+                    opacity: 0;
+                }
+            }
+
+            > h2 {
+                text-align: center;
+            }
+
+            .result {
+                opacity: 1;
+                padding: 20px;
+                box-sizing: content-box;
+                transition: .5s all ease-out;
+                @include clearfix;
+
+                &:nth-of-type(odd) {
+                    background: #e3e3e3;
+                }
+
+                &:nth-of-type(even) {
+                    background: #ececec;
+                }
+
+                &:hover, &.selected {
+                    background: #333;
+                    color: #fff;
+                }
+
+                i.wishlist {
+                    font-size: 22px;
+                    cursor: pointer;
+
+                    &.fa-heart {
+                        color: $red;
+                    }
+
+                    &:hover {
+                        animation: pulse linear 1s infinite;
+                        color: $red;
+                    }
+                }
+
+                h2 {
+                    padding: 0;
+                    margin: 0;
+                    margin-bottom: 10px;
+                }
+
+                p {
+                    font-size: 12px;
+                }
+
+                .thumbnail {
+                    cursor: pointer;
+                    width: 220px;
+                    height: 123.5px;
+                    float: left;
+                    margin-right: 20px;
+                    box-sizing: content-box;
+                    position: relative;
+
+                    &:hover i {
+                        color: $red !important;
+                    }
+
+                    img {
+                        max-width: 100%;
+                        display: block;
+                    }
+
+                    .mask {
+                        position: absolute;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        height: 100%;
+                        width: 100%;
+                        min-width: 220px;
+
+                        i {
+                            font-size: 42px;
+                            color: #fff;
+                            transition: .25s color;
+                        }
+                    }
+                }
+            }
+
+            #load-more {
+                border: none;
+                padding: 10px;
+                font-size: 18px;
+                width: 40%;
+                display: block;
+                background: $red;
+                color: #fff;
+                margin: 50px auto;
+                cursor: pointer;
+            }
+        }
+
+        #youtube-player {
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 50%;
+            flex-direction: column;
+            color: #fff;
+
+            h2 {
+                padding: 20px;
+            }
+
+            iframe {
+                max-width: 100%;
+                display: block;
+                margin: 0 auto;
+            }
+        }
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.25);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes placeHolderShimmer {
+    0% {
+        background-position: -220px 0
+    }
+
+    100% {
+        background-position: 220px 0
+    }
+}

@@ -1,0 +1,195 @@
+@import 'http://fonts.googleapis.com/css?family=Roboto';
+@import 'https://use.fontawesome.com/1c28ca5809.css';
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: #eee url(../images/shattered.png) repeat top center;
+  overflow: hidden; }
+
+* {
+  box-sizing: border-box; }
+
+main {
+  margin: 0 auto;
+  width: 1260px; }
+  main.loading {
+    height: 100vh;
+    background: url(../images/loader.gif) no-repeat center center; }
+    main.loading #screen, main.loading header {
+      opacity: 0; }
+  main header, main #screen {
+    opacity: 1;
+    transition: .5s opacity ease; }
+  main header {
+    background: #df1f1f; }
+    main header #top {
+      display: flex;
+      padding: 20px;
+      height: 100px;
+      align-content: center;
+      justify-content: flex-start; }
+      main header #top > * {
+        display: block; }
+      main header #top img {
+        width: 120px; }
+      main header #top input {
+        padding: 0 20px;
+        background: #ac0809;
+        border: none;
+        border-radius: 30px;
+        width: 1000px;
+        outline: none;
+        color: #fff;
+        font-size: 20px;
+        line-height: 2;
+        margin-top: 10px;
+        height: 40px;
+        margin-left: 50px;
+        opacity: 1;
+        transition: .25s opacity ease-in; }
+        main header #top input[disabled] {
+          opacity: .5; }
+      main header #top ::-webkit-input-placeholder {
+        color: #df1f1f;
+        font-size: 20px; }
+    main header #tabs {
+      width: 100%;
+      text-transform: uppercase;
+      font-weight: bold;
+      display: flex;
+      padding: 5px; }
+      main header #tabs a {
+        border-top: 1px solid #fff;
+        padding: 10px 0;
+        margin: 5px;
+        text-align: center;
+        display: block;
+        width: 50%;
+        text-decoration: none;
+        color: #fff;
+        letter-spacing: 1px;
+        opacity: .5;
+        transition: .5s all; }
+        main header #tabs a:hover, main header #tabs a.selected {
+          opacity: 1; }
+  main #screen {
+    display: flex;
+    height: 800px; }
+    main #screen #results {
+      width: 50%;
+      max-height: 800px;
+      overflow-y: scroll;
+      background: #fff; }
+      main #screen #results.loading {
+        background: #fff url(../images/loader.gif) no-repeat center center; }
+        main #screen #results.loading .thumbnail .mask {
+          animation-duration: .75s;
+          animation-fill-mode: forwards;
+          animation-iteration-count: infinite;
+          animation-name: placeHolderShimmer;
+          animation-timing-function: linear;
+          background: #f6f7f8;
+          background: linear-gradient(to right, #eeeeee 0%, #dddddd 7%, #eeeeee 62%);
+          z-index: 20; }
+        main #screen #results.loading .result {
+          opacity: 0; }
+      main #screen #results > h2 {
+        text-align: center; }
+      main #screen #results .result {
+        opacity: 1;
+        padding: 20px;
+        box-sizing: content-box;
+        transition: .5s all ease-out; }
+        main #screen #results .result:after {
+          content: "";
+          display: table;
+          clear: both; }
+        main #screen #results .result:nth-of-type(odd) {
+          background: #e3e3e3; }
+        main #screen #results .result:nth-of-type(even) {
+          background: #ececec; }
+        main #screen #results .result:hover, main #screen #results .result.selected {
+          background: #333;
+          color: #fff; }
+        main #screen #results .result i.wishlist {
+          font-size: 22px;
+          cursor: pointer; }
+          main #screen #results .result i.wishlist.fa-heart {
+            color: #df1f1f; }
+          main #screen #results .result i.wishlist:hover {
+            animation: pulse linear 1s infinite;
+            color: #df1f1f; }
+        main #screen #results .result h2 {
+          padding: 0;
+          margin: 0;
+          margin-bottom: 10px; }
+        main #screen #results .result p {
+          font-size: 12px; }
+        main #screen #results .result .thumbnail {
+          cursor: pointer;
+          width: 220px;
+          height: 123.5px;
+          float: left;
+          margin-right: 20px;
+          box-sizing: content-box;
+          position: relative; }
+          main #screen #results .result .thumbnail:hover i {
+            color: #df1f1f !important; }
+          main #screen #results .result .thumbnail img {
+            max-width: 100%;
+            display: block; }
+          main #screen #results .result .thumbnail .mask {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            min-width: 220px; }
+            main #screen #results .result .thumbnail .mask i {
+              font-size: 42px;
+              color: #fff;
+              transition: .25s color; }
+      main #screen #results #load-more {
+        border: none;
+        padding: 10px;
+        font-size: 18px;
+        width: 40%;
+        display: block;
+        background: #df1f1f;
+        color: #fff;
+        margin: 50px auto;
+        cursor: pointer; }
+    main #screen #youtube-player {
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 50%;
+      flex-direction: column;
+      color: #fff; }
+      main #screen #youtube-player h2 {
+        padding: 20px; }
+      main #screen #youtube-player iframe {
+        max-width: 100%;
+        display: block;
+        margin: 0 auto; }
+
+@keyframes pulse {
+  0% {
+    transform: scale(1); }
+  50% {
+    transform: scale(1.25); }
+  100% {
+    transform: scale(1); } }
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -220px 0; }
+  100% {
+    background-position: 220px 0; } }
+
+/*# sourceMappingURL=style.css.map */

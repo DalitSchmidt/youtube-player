@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>Youtube Player</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+</head>
+
+<body ng-app="Youtube">
+    <main id="main" ng-controller="MainController" class="loading">
+        <header>
+            <div id="top">
+                <img src="images/logo.png" alt="">
+                <input type="search" ng-disabled="results.list == 'wishlist'" name="search" ng-model="searchTerm" ng-model-options="{ debounce: 200 }" placeholder="Search video..">
+            </div>
+
+            <div id="tabs" ng-controller="MenuController">
+                <a href="#" ng-click="setList('remote')" ng-class="{'selected': results.list == 'remote'}"><i class="fa fa-list"></i> Results</a>
+                <a href="#" ng-click="setList('wishlist')" ng-class="{'selected': results.list == 'wishlist'}"><i class="fa fa-heart"></i> Wishlist</a>
+            </div>
+        </header>
+
+        <div id="screen">
+            <section id="results" ng-class="{'loading': loading}" infinite-scroll="searchVideos()">
+                <h2 ng-if="results.list == 'remote' && !results.remoteVideos.length">Go on, search something</h2>
+                <h2 ng-if="results.list == 'wishlist' && !results.wishlist.length">Your wishlist is empty</h2>
+
+                <div class="result" ng-repeat="video in results.results" ng-class="{'selected': currentVideo.code == video.code }">
+                    <h2 ng-bind="video.title"></h2>
+
+                    <div class="thumbnail" ng-click="setVideo( video )" >
+                        <div class="mask"><i class="fa fa-play-circle"></i></div>
+                        <img ng-src="https://img.youtube.com/vi/{{video.code}}/mqdefault.jpg">
+                    </div>
+
+                    <p ng-bind="video.description"></p>
+
+                    <i class="wishlist fa" ng-class="isSaved( video.code ) ? 'fa-heart' : 'fa-heart-o'" item="{{video}}"></i>
+                </div>
+
+                <button id="load-more" ng-click="searchVideos()" ng-if="results.list == 'remote' && results.remoteVideos.length"><i class="fa fa-plus"></i> Load More</button>
+            </section>
+
+            <div id="youtube-player">
+                <h2 ng-show="currentVideo != null">NOW PLAYING: <span ng-bind="currentVideo.title"></span></h2>
+                <div id="player" player video-id="{{ currentVideo.code }}"></div>
+            </div>
+        </div>
+    </main>
+
+    <audio>
+        <source src="sounds/click.mp3" />
+        <source src="sounds/click.ogg" />
+    </audio>
+
+    <script src="//www.youtube.com/iframe_api"></script>
+    <script src="application/vendor/jquery.js"></script>
+    <script src="application/vendor/angular-1.5.6.js"></script>
+    <script src="application/vendor/angular-route.min.js"></script>
+
+    <script src="application/app.min.js"></script>
+</body>
+</html>
